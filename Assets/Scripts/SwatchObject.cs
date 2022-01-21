@@ -10,16 +10,23 @@ public class SwatchObject : MonoBehaviour
     {
         float scaler = 0.4f;
         var renderer = GetComponent<Renderer>();
-        var colorObj = colorObjects.GetComponent<Renderer>();
+        
         if (toggle)
         {
             transform.localScale = new Vector3(transform.localScale.x + scaler, transform.localScale.y + scaler, transform.localScale.z + scaler);
-            colorObj.material.color = renderer.material.color;   
+            var mainColorObj = colorObjects.GetComponent<Renderer>();
+            mainColorObj.material.color = renderer.material.color;
+            foreach (Transform gameObj in colorObjects.transform) 
+            {
+                var colorObj = gameObj.GetComponent<Renderer>();
+                colorObj.material.color = renderer.material.color;
+            }
             toggle = false;
         }
         else 
         {
             transform.localScale = new Vector3(transform.localScale.x - scaler, transform.localScale.y - scaler, transform.localScale.z - scaler);
+            
             toggle = true;
         }
 
